@@ -60,4 +60,6 @@ int main(){
     bool resultado = arvoresIguais(raiz1, raiz2); 
 
     cout << endl << resultado;
+
+    return 0;
 }

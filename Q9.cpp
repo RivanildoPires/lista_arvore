@@ -25,6 +25,26 @@ int altura(NoArvore *raiz){
 	
 }
 
+void rotacaoDireita(NoArvore *&raiz){
+    NoArvore *f = raiz->esquerda;
+    NoArvore *x = f->direita;
+
+    f->direita = raiz;
+    raiz->esquerda = x;
+
+    raiz = f;
+}
+
+void rotacaoEsquerda(NoArvore *&raiz){
+    NoArvore *f = raiz->direita;
+    NoArvore *y = f->esquerda;
+
+    f->esquerda = raiz;
+    raiz->direita = y;
+
+    raiz = f;
+}
+
 bool verificarBalanceada(NoArvore *raiz){ 
     if (raiz == NULL)
         return 1;
@@ -38,6 +58,35 @@ bool verificarBalanceada(NoArvore *raiz){
     }
  
     return 0;
+}
+
+void balancear(NoArvore *&raiz){
+    if(raiz == NULL){
+        return;
+    }
+
+    int balanceamento = altura(raiz->esquerda) - altura(raiz->direita);
+
+    if (balanceamento > 1){
+        if (altura(raiz->esquerda->esquerda) >= altura(raiz->esquerda->direita)){
+            rotacaoDireita(raiz);
+        }else{
+            raiz->esquerda = raiz->esquerda;
+            rotacaoEsquerda(raiz->esquerda);
+            rotacaoDireita(raiz);
+        }
+
+    }else if (balanceamento < -1){
+        if (altura(raiz->direita->direita) >= altura(raiz->direita->esquerda)){
+            rotacaoEsquerda(raiz);
+        }else{
+            raiz->direita = raiz->direita;
+            rotacaoDireita(raiz->direita);
+            rotacaoEsquerda(raiz);
+        }
+    }
+    balancear(raiz->esquerda);
+    balancear(raiz->direita);
 }
 
 
@@ -63,7 +112,10 @@ int main(){
     raiz->esquerda -> esquerda -> esquerda = inserirNo(9);
     raiz->esquerda -> esquerda -> esquerda -> esquerda = inserirNo(10);
     listar(raiz);
-
+    cout << endl;
+    balancear(raiz);
+    listar(raiz);
+    cout << endl;
     if(verificarBalanceada(raiz)){
     	
     	cout << "E balanceada\n";

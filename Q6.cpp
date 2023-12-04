@@ -53,4 +53,6 @@ int main(){
     listar(raiz);
 
     cout << endl << profudindade(raiz);
+
+    return 0;
 }

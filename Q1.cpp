@@ -35,4 +35,6 @@ int main(){
     raiz->direita = inserirNo(3);
     raiz->direita->esquerda = inserirNo(2);
     listar(raiz);
+
+    return 0;
 }

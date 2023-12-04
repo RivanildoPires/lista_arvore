@@ -16,14 +16,17 @@ NoArvore* inserirNo(int value) {
     return novoNo;
 }
 
-int altura(NoArvore *raiz){
-    if(raiz == NULL){
+int somaNo(NoArvore *raiz){
+    if (raiz == NULL){
         return 0;
     }
-    
-	return 1+max(altura(raiz->esquerda), altura(raiz->direita));
-	
-	}
+
+    if(raiz->esquerda == NULL && raiz->direita == NULL){
+        return raiz->key;
+    }
+
+    return somaNo(raiz->esquerda) + somaNo(raiz->direita);
+}
 
 
 void listar(NoArvore* raiz){
@@ -38,14 +41,17 @@ void listar(NoArvore* raiz){
 }
 
 int main(){
-    
-    NoArvore* raiz = inserirNo (1);
-    raiz -> esquerda = inserirNo(5);
+	
+	NoArvore* raiz = inserirNo (1);
+    raiz -> esquerda = NULL;
     raiz->direita = inserirNo(3);
     raiz->direita->esquerda = inserirNo(2);
     listar(raiz);
+    cout << endl;
 
-    cout << endl << altura(raiz);
-    
+    int soma = somaNo(raiz);
+    cout << "Soma dos NOS: " << soma << endl;
+
+
     return 0;
 }

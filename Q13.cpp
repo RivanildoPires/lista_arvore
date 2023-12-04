@@ -15,15 +15,22 @@ NoArvore* inserirNo(int value) {
     novoNo->direita = NULL;
     return novoNo;
 }
-
-int altura(NoArvore *raiz){
+bool verificar(NoArvore *&raiz){
     if(raiz == NULL){
-        return 0;
+        return false;
     }
-    
-	return 1+max(altura(raiz->esquerda), altura(raiz->direita));
-	
-	}
+
+    int soma = 0;
+
+    if(raiz->esquerda != NULL){
+        soma += raiz->esquerda->key;
+    }
+
+    if(raiz->direita != NULL){
+        soma += raiz->direita->key;
+    }
+    return soma == raiz->key;
+}
 
 
 void listar(NoArvore* raiz){
@@ -38,14 +45,19 @@ void listar(NoArvore* raiz){
 }
 
 int main(){
-    
-    NoArvore* raiz = inserirNo (1);
-    raiz -> esquerda = inserirNo(5);
-    raiz->direita = inserirNo(3);
-    raiz->direita->esquerda = inserirNo(2);
+	
+	NoArvore* raiz = inserirNo (10);
+    raiz->esquerda = inserirNo(4);
+    raiz->direita = inserirNo(6);
     listar(raiz);
+    cout << endl;
 
-    cout << endl << altura(raiz);
-    
+    if(verificar(raiz)){
+        cout << "True" << endl;
+    }
+    else{
+        cout<< "False" << endl;
+    }
+
     return 0;
 }
